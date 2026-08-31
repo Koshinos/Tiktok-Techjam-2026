@@ -5,9 +5,15 @@ import json
 import random
 import re
 import statistics
+import sys
 import uuid
 from collections import defaultdict
 from pathlib import Path
+
+# Allow IDEs to run this file directly as well as via
+# ``python -m evaluator.local_evaluator``.
+if __package__ in (None, ""):
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from starter.agent import Agent
 
@@ -226,6 +232,7 @@ def evaluate(
     for sample in samples:
         session_id = f"public_{uuid.uuid4().hex}"
         agent.reset(session_id, sample["user_profile"])
+        print(f"[MAP] {session_id} -> sample_id={sample['sample_id']} scenario={sample['scenario_type']}", file=sys.stderr)
         target = str(sample["ground_truth"]["parent_asin"])
         effective_intent_card, effective_behavior = materialize_hidden_fields(sample, products)
         effective_sample = {**sample, "intent_card": effective_intent_card, "behavior": effective_behavior}
