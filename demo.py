@@ -4,16 +4,16 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent / "starter"))
-from agent import Agent
+from starter.agent import Agent
 
 def run_hardcore_stress_test():
     print("=" * 75)
-    print(" 🚀 ADVANCED CONVERSATIONAL COGNITIVE ARCHITECTURE: STRESS TEST DEMO")
+    print("STRESS TEST DEMO")
     print("=" * 75)
     
     catalog_path = Path("data/catalog.jsonl")
     if not catalog_path.exists():
-        print(f"❌ Critical Error: Catalog asset missing at {catalog_path}.")
+        print(f" Critical Error: Catalog asset missing at {catalog_path}.")
         return
 
     print("[Phase 1/4] Bootstrapping In-Memory SQLite FTS5 Vector/Lexical Matrix...")
@@ -40,8 +40,8 @@ def run_hardcore_stress_test():
 
     for idx, (phase_label, user_msg) in enumerate(adversarial_dialogue, start=1):
         print(f"-------------------------------------------------------------------")
-        print(f"🔄 [{phase_label}]")
-        print(f"👤 User Input: \"{user_msg}\"")
+        print(f" [{phase_label}]")
+        print(f" User Input: \"{user_msg}\"")
         
         response = agent.respond(
             session_id=session_id,
@@ -50,16 +50,16 @@ def run_hardcore_stress_test():
             top_k=top_k
         )
         
-        print(f"\n🤖 Copilot Output Message: \"{response['message']}\"")
+        print(f"\n Copilot Output Message: \"{response['message']}\"")
         
         if response['ask_attribute']:
-            print(f"💡 Active Proactive Strategy: Triggered variance-based question for slot -> [ {response['ask_attribute'].upper()} ]")
+            print(f" Active Proactive Strategy: Triggered variance-based question for slot -> [ {response['ask_attribute'].upper()} ]")
             
         recs = response['recommendations']
-        print(f"📦 Pipeline Yield: {len(recs)} candidates retrieved & semantically scored.")
+        print(f" Pipeline Yield: {len(recs)} candidates retrieved & semantically scored.")
         if recs:
             top_asins = [r['parent_asin'] for r in recs[:3]]
-            print(f"   🏆 Top-3 Precision Reranked ASINs: {top_asins}")
+            print(f"    Top-3 Precision Reranked ASINs: {top_asins}")
             
         usage = response['usage']
         p_tok = usage.get('prompt_tokens', 0)
@@ -68,13 +68,13 @@ def run_hardcore_stress_test():
         cumulative_tokens["completion"] += c_tok
         
         if (p_tok + c_tok) > 0:
-            print(f"⚡ LLM Semantic Sniper Payload: {p_tok + c_tok} tokens (Prompt: {p_tok}, Completion: {c_tok})")
+            print(f" LLM Semantic Sniper Payload: {p_tok + c_tok} tokens (Prompt: {p_tok}, Completion: {c_tok})")
         else:
-            print(f"⚡ Pipeline Path: Deterministic SQLite FTS5 / Zero-Cost Execution")
+            print(f" Pipeline Path: Deterministic SQLite FTS5 / Zero-Cost Execution")
         print()
 
     print("=" * 75)
-    print(" 📊 STRESS TEST TELEMETRY SUMMARY")
+    print(" STRESS TEST TELEMETRY SUMMARY")
     print(f" • Total Conversational Turns Simulated: {len(adversarial_dialogue)}")
     print(f" • Cumulative Session Token Footprint: {cumulative_tokens['prompt'] + cumulative_tokens['completion']} tokens")
     print(f" • State Engine Status: 100% Operational (Zero memory leakage, successful overrides)")
