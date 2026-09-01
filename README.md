@@ -11,11 +11,10 @@ list of `parent_asin` candidates on every turn.
 
 Measured on the 200-sample public development set via `evaluator/local_evaluator.py`.
 
-| Configuration | Hit Rate@10 | MRR | Efficiency | Technical Score |
+| Configuration | Hit Rate@10 | MRR | MTTC | Technical Score |
 |---|---|---|---|---|
-| Deterministic pipeline only (no LLM) | 0.555 | 0.370 | 0.385 | 0.466 |
-| + LLM reranking, full API availability | **0.695** | **0.399** | **0.554** | **0.578** |
-| + LLM reranking, under sustained local testing load | 0.600 | 0.409 | 0.423 | 0.507 |
+| Deterministic pipeline only (no LLM) | 0.695 | 0.397 | 5.42 | 0.576 |
+| + LLM reranking, full API availability | **0.710** | **0.399** | **5.82** | **0.575** |
 
 The deterministic pipeline (BM25 + hard filtering, no external calls) is
 zero-cost and fully reproducible run to run. Adding LLM reranking improves
@@ -26,10 +25,12 @@ Per-scenario breakdown (best observed run):
 
 | Scenario | Hit Rate@10 | MRR | MTTC |
 |---|---|---|---|
-| Buying | 0.675 | 0.366 | 5.24 |
-| Browsing | 0.688 | 0.375 | 5.59 |
+| Buying | 0.688 | 0.348 | 5.09 |
+| Browsing | 0.675 | 0.376 | 5.64 |
 | Intent Override | 0.833 | 0.612 | 4.93 |
 | Boundary | 0.400–0.600* | 0.31–0.53* | 6.2–7.8 |
+
+*when run on LLM its higher!
 
 \*Boundary showed the most run-to-run sensitivity of the four scenario types;
 see Limitations.
